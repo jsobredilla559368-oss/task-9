@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>LVL.6 Conditionals</title>
+</head>
+
+<body>
+    <br>
+    <div class="container d-flex justify-content-center">
+        <div class="card" style="width: 100%; max-width: 40rem;">
+            <div class="card-body text-center">
+                <span class="badge text-bg-primary float-start"><i class="bi bi-door-closed me-1"></i>level 6</span>
+                <h5 class="card-title mt-4">Choose a Door</h5>
+                <p class="card-text">Only one door holds the prize!</p>
+                <div class="d-flex justify-content-center gap-3 my-4">
+                    <button class="door-btn btn btn-outline-dark p-4" data-door="1"><i
+                            class="bi bi-door-closed display-4"></i><br>Door 1</button>
+                    <button class="door-btn btn btn-outline-dark p-4" data-door="2"><i
+                            class="bi bi-door-closed display-4"></i><br>Door 2</button>
+                    <button class="door-btn btn btn-outline-dark p-4" data-door="3"><i
+                            class="bi bi-door-closed display-4"></i><br>Door 3</button>
+                </div>
+                <div id="resultMsg" class="alert d-none"></div>
+
+                <div class="row g-2">
+                    <div class="col-12 col-md-6">
+                        <a href="index5.html" class="btn btn-primary w-100"
+                            style="background-color: rgb(161, 158, 158)">Back to Level 5</a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a href="index.html" class="btn btn-primary w-100" style="background-color: black;">Restart
+                            Game</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <script>
+        const doors = document.querySelectorAll('.door-btn');
+        const resultMsg = document.getElementById('resultMsg');
+        const winningDoor = Math.floor(Math.random() * 3) + 1; // Random door 1-3
+
+        doors.forEach(door => {
+            door.addEventListener('click', function () {
+                const selectedDoor = parseInt(this.getAttribute('data-door'));
+
+
+                doors.forEach(d => {
+                    d.classList.remove('btn-success', 'btn-danger');
+                    d.classList.add('btn-outline-dark');
+                    d.disabled = true;
+                });
+
+                resultMsg.classList.remove('d-none', 'alert-success', 'alert-danger');
+
+                if (selectedDoor === winningDoor) {
+                    this.classList.remove('btn-outline-dark');
+                    this.classList.add('btn-success');
+                    resultMsg.classList.add('alert-success');
+                    resultMsg.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i><strong>You Win!</strong> You found the prize!';
+                } else {
+                    this.classList.remove('btn-outline-dark');
+                    this.classList.add('btn-danger');
+                    resultMsg.classList.add('alert-danger');
+                    resultMsg.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i><strong>Wrong Door!</strong> The prize was behind Door ' + winningDoor + '.';
+
+
+                    document.querySelector(`.door-btn[data-door="${winningDoor}"]`).classList.remove('btn-outline-dark');
+                    document.querySelector(`.door-btn[data-door="${winningDoor}"]`).classList.add('btn-success');
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+        defer></script>
+</body>
+
+</html>
